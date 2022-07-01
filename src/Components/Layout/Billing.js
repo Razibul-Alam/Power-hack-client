@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import { Container,Table,Button } from 'react-bootstrap';
+import { Container,Table,Button,InputGroup,FormControl } from 'react-bootstrap';
 import axios from'axios';
 import Pagination from 'react-bootstrap/Pagination';
 import AddEditBilling from '../Billing/AddEditBilling';
 import { useAllAction } from '../../Custom-Hook/useAllActions';
 const Billing = () => {
   // call custom hook
-  const{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount}=useAllAction()
+  const{loadBills,billInfo,setBillInfo,removeBill,dataCount}=useAllAction()
   const [singleBill,setSingleBill]=useState({});
   const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  
@@ -44,15 +44,21 @@ console.log(pageNumber)
     return (
       <>
       <AddEditBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill} setIsUpdate={setIsUpdate}/>
-        <Container>
+        <Container className='mt-5'>
+        <div className='mb-2 d-flex justify-content-between bg-secondary py-2'>
+            <InputGroup className=" w-50 ms-2">
+    <FormControl
+      placeholder="search here"
+      aria-label="Recipient's username"
+      aria-describedby="basic-addon2"
+    />
+    <InputGroup.Text id="basic-addon2">Search</InputGroup.Text>
+  </InputGroup>
+            
+            <Button className='me-2' variant="primary" size="lg" onClick={()=>setShow(true)}>Add New Bill</Button>
+          </div>
         <Table striped bordered hover responsive>
         <thead>
-        <tr className='mb-3'>
-            <th colSpan={3}>
-                <input type="search" name="" id="" />
-            </th>
-            <th><Button onClick={()=>setShow(true)}>Add New Bill</Button></th>
-          </tr>
           <tr>
             <th>Id</th>
             <th>Full Name</th>
@@ -69,9 +75,8 @@ console.log(pageNumber)
             <td>{bill.email}</td>
             <td>{bill.phone}</td>
             <td>{bill.ammount}</td>
-            <td><span onClick={()=>removeBill(bill._id)}>Delete</span><span className='ms-2' onClick={()=>editBill(bill._id)}>Edit</span></td>
+            <td><span className='text-danger' onClick={()=>removeBill(bill._id)}>Delete</span><span className='ms-3 text-primary' onClick={()=>editBill(bill._id)}>Edit</span></td>
           </tr>)}
-          <tr>Total={totalPayment}</tr>
         </tbody>
       </Table>
       <div className='d-flex justify-content-center'>

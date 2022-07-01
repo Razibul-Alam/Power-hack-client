@@ -5,6 +5,7 @@ import { useAllAction } from './../../Custom-Hook/useAllActions';
 const Header = () => {
   const[payment,setPayment]=useState(0)
   const{billInfo}=useAllAction()
+  console.log(billInfo)
       // total Amount
 useEffect(()=>{
   const total=billInfo?.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
@@ -18,7 +19,7 @@ useEffect(()=>{
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text className='text-light'>
-              Total Payment={payment}
+              <h5 className='text-light'>Total Payment={payment}</h5>
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
