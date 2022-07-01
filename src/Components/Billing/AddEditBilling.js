@@ -20,10 +20,10 @@ const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo})=>{
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(isUpdate){
-axios.put(`https://nameless-wave-74906.herokuapp.com//api/update-billing/${_id}`,billingInfo)
+axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,billingInfo)
 .then(result=>setShow(false))
         }else{
-          axios.post("https://nameless-wave-74906.herokuapp.com//api/add-billing", billingInfo)
+          axios.post("https://nameless-wave-74906.herokuapp.com/api/add-billing", billingInfo)
         .then((res) => {
           if (res.data.insertedId) {
             // alert("added successfully");

@@ -25,7 +25,7 @@ useEffect(()=>{
 
 //  bill edit
 const editBill=(id)=>{
-  axios.get(`https://nameless-wave-74906.herokuapp.com//api/single-billing/${id}`)
+  axios.get(`https://nameless-wave-74906.herokuapp.com/api/single-billing/${id}`)
   .then(data=>setSingleBill(data.data))
   setShow(true)
   setIsUpdate(true)
