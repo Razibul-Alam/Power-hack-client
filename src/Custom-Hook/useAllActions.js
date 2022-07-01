@@ -2,12 +2,16 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios';
 export const useAllAction=()=>{
     const [billInfo,setBillInfo]=useState([])
+    const [dataCount,setDataCount]=useState(null)
     const [totalPayment,setTotalpayment]=useState(0)
-    const loadBills=()=>{
-            let url='https://nameless-wave-74906.herokuapp.com/api/billing-list'
+    const loadBills=(pageNumber)=>{
+            let url=`https://nameless-wave-74906.herokuapp.com/api/billing-list?page=${pageNumber}&pageSize=10`
             fetch(url)
             .then(res=>res.json())
-            .then(data=>setBillInfo(data))
+            .then(data=>{
+                setBillInfo(data.getAllBills)
+                setDataCount(data.dataCount)
+            })
     }
     // remove billing
     const removeBill=(_id)=>{
@@ -26,5 +30,5 @@ useEffect(()=>{
     const total=billInfo?.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
     setTotalpayment(total)
   },[billInfo])
-    return{loadBills,billInfo,setBillInfo,removeBill,totalPayment}
+    return{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount}
 }

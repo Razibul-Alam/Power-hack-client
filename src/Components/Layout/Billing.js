@@ -1,18 +1,25 @@
 import React,{useState,useEffect} from 'react';
 import { Container,Table,Button } from 'react-bootstrap';
 import axios from'axios';
+import Pagination from 'react-bootstrap/Pagination';
 import AddEditBilling from '../Billing/AddEditBilling';
 import { useAllAction } from '../../Custom-Hook/useAllActions';
 const Billing = () => {
   // call custom hook
-  const{loadBills,billInfo,setBillInfo,removeBill,totalPayment}=useAllAction()
+  const{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount}=useAllAction()
   const [singleBill,setSingleBill]=useState({});
+  const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  
   const [isUpdate,setIsUpdate]=useState(false)
 
-            const handleClose = () => setShow(false);
+            const handleClose = () =>{
+              if(isUpdate==true){
+                setIsUpdate(false)
+              }
+              setShow(false)
+            }
 useEffect(()=>{
-  loadBills()
+  loadBills(pageNumber)
 },[billInfo])
             // loading all billing info
           //   useEffect(()=>{
@@ -31,9 +38,12 @@ const editBill=(id)=>{
   setIsUpdate(true)
 }
 
+const count=Math.ceil(dataCount/10)
+let paginationCount=[...Array(count).keys()]
+console.log(pageNumber)
     return (
       <>
-      <AddEditBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill}/>
+      <AddEditBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill} setIsUpdate={setIsUpdate}/>
         <Container>
         <Table striped bordered hover responsive>
         <thead>
@@ -64,6 +74,13 @@ const editBill=(id)=>{
           <tr>Total={totalPayment}</tr>
         </tbody>
       </Table>
+      <div className='d-flex justify-content-center'>
+      <Pagination>
+      <Pagination.Prev />
+     {paginationCount.map(page=> <Pagination.Item onClick={()=>setPageNumber(page)}>{page+1}</Pagination.Item>)}
+      <Pagination.Next />
+    </Pagination>
+      </div>
       </Container>
       </>
     );
