@@ -1,9 +1,16 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { useAllAction } from './../../Custom-Hook/useAllActions';
 const Header = () => {
-  const{totalPayment}=useAllAction()
+  const[payment,setPayment]=useState(0)
+  const{billInfo}=useAllAction()
+      // total Amount
+useEffect(()=>{
+  const total=billInfo?.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
+  setPayment(total)
+},[])
+  
     return (
         <Navbar className='bg-dark'>
         <Container>
@@ -11,7 +18,7 @@ const Header = () => {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text className='text-light'>
-              Total Payment={totalPayment}
+              Total Payment={payment}
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>

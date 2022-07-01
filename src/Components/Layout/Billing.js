@@ -16,7 +16,7 @@ useEffect(()=>{
 },[billInfo])
             // loading all billing info
           //   useEffect(()=>{
-          //     let url='http://localhost:5000/allbills'
+          //     let url='http://localhostt:5000/allbills'
           //     fetch(url)
           //     .then(res=>res.json())
           //     .then(data=>setBillInfo(data))
@@ -25,7 +25,7 @@ useEffect(()=>{
 
 //  bill edit
 const editBill=(id)=>{
-  axios.get(`https://nameless-wave-74906.herokuapp.com/api/delete-billing/${id}`)
+  axios.get(`https://nameless-wave-74906.herokuapp.com//api/single-billing/${id}`)
   .then(data=>setSingleBill(data.data))
   setShow(true)
   setIsUpdate(true)
@@ -45,10 +45,10 @@ const editBill=(id)=>{
           </tr>
           <tr>
             <th>Id</th>
-            <th>Name</th>
+            <th>Full Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>Ammount</th>
+            <th>Paid Amount</th>
             <th>Action</th>
           </tr>
         </thead>

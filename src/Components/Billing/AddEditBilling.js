@@ -20,10 +20,10 @@ const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo})=>{
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(isUpdate){
-axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,billingInfo)
+axios.put(`https://nameless-wave-74906.herokuapp.com//api/update-billing/${_id}`,billingInfo)
 .then(result=>setShow(false))
         }else{
-          axios.post("https://nameless-wave-74906.herokuapp.com/api/add-billing", billingInfo)
+          axios.post("https://nameless-wave-74906.herokuapp.com//api/add-billing", billingInfo)
         .then((res) => {
           if (res.data.insertedId) {
             // alert("added successfully");
@@ -38,11 +38,11 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
       <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Delivery Item Information</Modal.Title>
+          <Modal.Title>{isUpdate?'Update':'Create'} Bill Payment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
       {/* <div className="d-flex">
-        {isLoading && <h5 className="test-primary">updating.....</h5>}
+        {isLoading && <h5 className="text-primary">updating.....</h5>}
       </div> */}
       <div className="">
           <div className="my-4">
@@ -55,7 +55,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     className="form-control"
                     type="text"
                     name="name"
-                    defaultValue={singleInfo?.name}
+                    defaultValue={name}
                   />
                   <label className="form-label">Email</label>
                   <input
@@ -64,10 +64,12 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     className="form-control"
                     type="email"
                     name="email"
+                    defaultValue={email}
                   />
                   <label className="form-label">Phone</label>
                   <input
                     required
+                    defaultValue={phone}
                     onChange={handleChange}
                     className="form-control"
                     type="number"
@@ -75,6 +77,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                   />
                   <label className="form-label">Paid Ammount</label>
                   <input
+                  defaultValue={ammount}
                     required
                     onChange={handleChange}
                     className="form-control"
@@ -82,7 +85,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     name="ammount"
                   />
               </div>
-              <div className="mt-5 w-25 mx-auto input-icon">
+              <div className="mt-5 mx-auto input-icon">
                 <input
                   className="form-control update-btn py-2 px-3"
                   style={{
@@ -93,7 +96,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     fontWeight: "600",
                   }}
                   type="submit"
-                  value='Create Bill'
+                  value='Submit'
                 />
               </div>
             </form>
