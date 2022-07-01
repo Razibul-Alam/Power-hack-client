@@ -1,47 +1,39 @@
 import React,{useState,useEffect} from 'react';
 import { Container,Table,Button } from 'react-bootstrap';
-import CustomModal from './../Modal/CustomModal';
 import axios from'axios';
-import AddBilling from '../Billing/AddBilling';
+import AddEditBilling from '../Billing/AddEditBilling';
+import { useAllAction } from '../../Custom-Hook/useAllActions';
 const Billing = () => {
+  // call custom hook
+  const{loadBills,billInfo,setBillInfo,removeBill,totalPayment}=useAllAction()
   const [singleBill,setSingleBill]=useState({});
-  const [billInfo,setBillInfo]=useState([]);
   const [show, setShow] = useState(false);  
   const [isUpdate,setIsUpdate]=useState(false)
-            const handleClose = () => setShow(false);
 
+            const handleClose = () => setShow(false);
+useEffect(()=>{
+  loadBills()
+},[billInfo])
             // loading all billing info
-            useEffect(()=>{
-              let url='http://localhost:5000/allbills'
-              fetch(url)
-              .then(res=>res.json())
-              .then(data=>setBillInfo(data))
-          },[billInfo])
-//  remove bill
-const removeBill=(_id)=>{
-  const confirmDelete=window.confirm('Are you sure? Do you want to remove?')
-  if(confirmDelete){
-   axios.delete(`http://localhost:5000/removeBill/${_id}`)
-   .then((result) =>{if(result.data.deletedCount>0){
-const remainingItems=billInfo?.filter(bill=>!bill._id==_id)
-// handleShow()
-setBillInfo(remainingItems)
-   }});
-  }
- }
+          //   useEffect(()=>{
+          //     let url='http://localhost:5000/allbills'
+          //     fetch(url)
+          //     .then(res=>res.json())
+          //     .then(data=>setBillInfo(data))
+          // },[billInfo])
+
 
 //  bill edit
 const editBill=(id)=>{
-  axios.get(`http://localhost:5000/singleid/${id}`)
+  axios.get(`https://nameless-wave-74906.herokuapp.com/api/delete-billing/${id}`)
   .then(data=>setSingleBill(data.data))
   setShow(true)
   setIsUpdate(true)
 }
 
-         console.log(singleBill) 
     return (
       <>
-      <AddBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill}/>
+      <AddEditBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill}/>
         <Container>
         <Table striped bordered hover responsive>
         <thead>
@@ -69,6 +61,7 @@ const editBill=(id)=>{
             <td>{bill.ammount}</td>
             <td><span onClick={()=>removeBill(bill._id)}>Delete</span><span className='ms-2' onClick={()=>editBill(bill._id)}>Edit</span></td>
           </tr>)}
+          <tr>Total={totalPayment}</tr>
         </tbody>
       </Table>
       </Container>

@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react';
 import{Button,Col,Modal} from 'react-bootstrap'
 import axios from 'axios'
 
-const AddBilling=({show,setShow,handleClose,isUpdate,singleInfo})=>{
+const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo})=>{
   console.log(isUpdate)
   const{name,email,phone,ammount,_id}=singleInfo;
     const [billingInfo, setBillingInfo] = useState({
@@ -20,20 +20,20 @@ const AddBilling=({show,setShow,handleClose,isUpdate,singleInfo})=>{
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(isUpdate){
-axios.put(`http://localhost:5000/updatebill/${_id}`,billingInfo)
-.then(result=>alert('result'))
+axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,billingInfo)
+.then(result=>setShow(false))
         }else{
-          axios.post("http://localhost:5000/api/add-billing", billingInfo)
+          axios.post("https://nameless-wave-74906.herokuapp.com/api/add-billing", billingInfo)
         .then((res) => {
           if (res.data.insertedId) {
-            alert("added successfully");
+            // alert("added successfully");
+            setShow(false)
           }
         });
         }
 
     }
     const handleChange=(e)=> setBillingInfo({ ...billingInfo, [e.target.name]: e.target.value });
-    // console.log(billingInfo)
     return (
       <>
       <Modal show={show} onHide={handleClose}>
@@ -107,4 +107,4 @@ axios.put(`http://localhost:5000/updatebill/${_id}`,billingInfo)
     );
 };
 
-export default AddBilling;
+export default AddEditBilling;
