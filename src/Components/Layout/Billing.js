@@ -2,11 +2,14 @@ import React,{useState,useEffect} from 'react';
 import { Container,Table,Button,InputGroup,FormControl } from 'react-bootstrap';
 import axios from'axios';
 import Pagination from 'react-bootstrap/Pagination';
-import AddEditBilling from '../Billing/AddEditBilling';
+
 import { useAllAction } from '../../Custom-Hook/useAllActions';
+import AddEditBilling from './AddEditBilling';
+import { useFunctionality } from './../../Custom-Hook/useFunctionality';
 const Billing = () => {
   // call custom hook
-  const{loadBills,billInfo,setBillInfo,removeBill,dataCount}=useAllAction()
+  // const{loadBills,billInfo,setBillInfo,removeBill,dataCount}=useAllAction()
+  const {loadBills,billInfo,setBillInfo,removeBill,dataCount}=useFunctionality()
   const [singleBill,setSingleBill]=useState({});
   const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  

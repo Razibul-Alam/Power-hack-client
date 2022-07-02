@@ -1,9 +1,9 @@
 import React,{useState,useEffect} from 'react';
-import{Button,Col,Modal} from 'react-bootstrap'
+import{Modal} from 'react-bootstrap'
 import axios from 'axios'
 
 const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo,setIsUpdate})=>{
-  console.log(isUpdate)
+
   const{name,email,phone,ammount,_id}=singleInfo;
     const [billingInfo, setBillingInfo] = useState({
         name: "",
@@ -11,12 +11,14 @@ const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo,setIsUpdate}
         phone: null,
         ammount: null,
       });
-      // update
+
+      // update billing
       useEffect(()=>{
         if(singleInfo){
             setBillingInfo({name:name,email:email,phone:phone,ammount:ammount,_id:_id})
         }
         },[singleInfo])
+
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(isUpdate){
@@ -24,12 +26,13 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
 .then(result=>{
   setShow(false)
   setIsUpdate(false)
+  alert('created successfully')
 })
         }else{
-          axios.post("https://nameless-wave-74906.herokuapp.com//api/add-billing", billingInfo)
+          axios.post("https://nameless-wave-74906.herokuapp.com/api/add-billing", billingInfo)
         .then((res) => {
           if (res.data.insertedId) {
-            // alert("added successfully");
+            alert("updated successfully");
             setShow(false)
           }
         });
