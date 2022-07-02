@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import { Container,Table,Button,InputGroup,FormControl } from 'react-bootstrap';
 import axios from'axios';
-import Pagination from 'react-bootstrap/Pagination';
+import {Pagination,Dropdown} from 'react-bootstrap';
 
 import { useAllAction } from '../../Custom-Hook/useAllActions';
 import AddEditBilling from './AddEditBilling';
@@ -13,7 +13,9 @@ const Billing = () => {
   const [singleBill,setSingleBill]=useState({});
   const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  
-  const [isUpdate,setIsUpdate]=useState(false)
+  const [isUpdate,setIsUpdate]=useState(false);
+  const[category,setCategory]=useState('name');
+  const [searchText,setSearchText]=useState('')
 
             const handleClose = () =>{
               if(isUpdate==true){
@@ -21,9 +23,10 @@ const Billing = () => {
               }
               setShow(false)
             }
+// load data
 useEffect(()=>{
-  loadBills(pageNumber)
-},[billInfo])
+  loadBills(pageNumber,category,searchText)
+},[billInfo,category,searchText])
             // loading all billing info
           //   useEffect(()=>{
           //     let url='http://localhostt:5000/allbills'
@@ -40,10 +43,15 @@ const editBill=(id)=>{
   setShow(true)
   setIsUpdate(true)
 }
+//serch text recieve
+const handleSearch=(e)=>{
+  setSearchText(e.target.value)
+} 
 
+// pagination number 
 const count=Math.ceil(dataCount/10)
 let paginationCount=[...Array(count).keys()]
-console.log(pageNumber)
+console.log(category,searchText)
     return (
       <>
       <AddEditBilling handleClose={handleClose} show={show} setShow={setShow} isUpdate={isUpdate} singleInfo={singleBill} setIsUpdate={setIsUpdate}/>
@@ -51,11 +59,21 @@ console.log(pageNumber)
         <div className='mb-2 d-flex justify-content-between bg-secondary py-2'>
             <InputGroup className=" w-50 ms-2">
     <FormControl
+    onChange={handleSearch}
       placeholder="search here"
       aria-label="Recipient's username"
       aria-describedby="basic-addon2"
     />
-    <InputGroup.Text id="basic-addon2">Search</InputGroup.Text>
+    <div>
+            <Dropdown className='ms-3 pb-3'>
+  <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+    {category.toLocaleUpperCase()}
+  </Dropdown.Toggle>
+  <Dropdown.Menu>
+    {['name','email','phone'].map(category=><Dropdown.Item onClick={()=>setCategory(category)}>{category}</Dropdown.Item>)}
+  </Dropdown.Menu>
+</Dropdown>        
+        </div>
   </InputGroup>
             
             <Button className='me-2' variant="primary" size="lg" onClick={()=>setShow(true)}>Add New Bill</Button>

@@ -4,8 +4,9 @@ export const useAllAction=()=>{
     const [billInfo,setBillInfo]=useState([])
     const [dataCount,setDataCount]=useState(null)
     const [totalPayment,setTotalpayment]=useState(0)
-    const loadBills=(pageNumber)=>{
-            let url=`https://nameless-wave-74906.herokuapp.com/api/billing-list?page=${pageNumber}&pageSize=10`
+    const loadBills=(pageNumber,category,searchText)=>{
+        console.log(searchText)
+            let url=`https://nameless-wave-74906.herokuapp.com/api/billing-list?page=${pageNumber}&category=${category}&searchText=${searchText}`
             fetch(url)
             .then(res=>res.json())
             .then(data=>{
