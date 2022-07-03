@@ -26,7 +26,7 @@ const Billing = () => {
 // load data
 useEffect(()=>{
   loadBills(pageNumber,category,searchText)
-},[billInfo,category,searchText])
+},[billInfo,category])
             // loading all billing info
           //   useEffect(()=>{
           //     let url='http://localhostt:5000/allbills'
