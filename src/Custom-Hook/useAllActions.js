@@ -8,11 +8,10 @@ export const useAllAction=()=>{
     const loadBills=(pageNumber,category,searchText)=>{
         console.log(searchText)
             let url=`https://nameless-wave-74906.herokuapp.com/api/billing-list?page=${pageNumber}&category=${category}&searchText=${searchText}`
-            fetch(url)
-            .then(res=>res.json())
+            axios.get(url,{headers:{jtoken:`Bearer ${user?.accesToken}`}})
             .then(data=>{
-                setBillInfo(data.getAllBills)
-                setDataCount(data.dataCount)
+                setBillInfo(data.data.getAllBills)
+                setDataCount(data.data.dataCount)
             })
     }
     // remove billing

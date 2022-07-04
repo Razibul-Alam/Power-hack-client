@@ -30,15 +30,23 @@ useEffect(()=>{
            
 // create bill button 
 const handleCreateBill=()=>{
-    setShow(true)
+    if(user.name){
+      setShow(true)
+    }else{
+      navigate('/login')
+    }
 }
 
 //  bill edit
 const editBill=(id)=>{
-  axios.get(`https://nameless-wave-74906.herokuapp.com/api/single-billing/${id}`)
+  if(!user.name){
+    navigate('/login')
+  }else{
+    axios.get(`https://nameless-wave-74906.herokuapp.com/api/single-billing/${id}`)
   .then(data=>setSingleBill(data?.data))
   setShow(true)
   setIsUpdate(true)
+  }
 }
 //serch text recieve
 const handleSearch=(e)=>{
@@ -73,7 +81,7 @@ console.log(category,searchText)
         </div>
   </InputGroup>
             
-            <Button className='me-2' variant="primary" size="lg" onClick={()=>handleCreateBill()}>Add New Bill</Button>
+            <Button className='me-2' variant="primary" size="lg" onClick={handleCreateBill}>Add New Bill</Button>
           </div>
         <Table striped bordered hover responsive>
         <thead>

@@ -36,7 +36,7 @@ alert('created successfully')
   .then(res => {
     console.log(res)
     if (res.status==200) {
-      setUser(res.data.user)
+      setUser(res.data)
       alert(res.data?.message);
       navigate('/')
     }else{
