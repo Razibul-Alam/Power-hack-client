@@ -4,6 +4,7 @@ export const useAllAction=()=>{
     const [billInfo,setBillInfo]=useState([])
     const [dataCount,setDataCount]=useState(null)
     const [totalPayment,setTotalpayment]=useState(0)
+    const [user,setUser]=useState({})
     const loadBills=(pageNumber,category,searchText)=>{
         console.log(searchText)
             let url=`https://nameless-wave-74906.herokuapp.com/api/billing-list?page=${pageNumber}&category=${category}&searchText=${searchText}`
@@ -31,5 +32,5 @@ useEffect(()=>{
     const total=billInfo?.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
     setTotalpayment(total)
   },[billInfo])
-    return{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount}
+    return{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount,user,setUser}
 }

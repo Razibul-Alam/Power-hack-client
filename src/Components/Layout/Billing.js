@@ -6,10 +6,10 @@ import {Pagination,Dropdown} from 'react-bootstrap';
 import { useAllAction } from '../../Custom-Hook/useAllActions';
 import AddEditBilling from './AddEditBilling';
 import { useFunctionality } from './../../Custom-Hook/useFunctionality';
+import { useNavigate } from 'react-router-dom';
 const Billing = () => {
-  // call custom hook
-  // const{loadBills,billInfo,setBillInfo,removeBill,dataCount}=useAllAction()
-  const {loadBills,billInfo,setBillInfo,removeBill,dataCount}=useFunctionality()
+  const navigate=useNavigate()
+  const {loadBills,billInfo,setBillInfo,removeBill,dataCount,user}=useFunctionality()
   const [singleBill,setSingleBill]=useState({});
   const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  
@@ -27,19 +27,21 @@ const Billing = () => {
 useEffect(()=>{
   loadBills(pageNumber,category,searchText)
 },[billInfo,category])
-            // loading all billing info
-          //   useEffect(()=>{
-          //     let url='http://localhostt:5000/allbills'
-          //     fetch(url)
-          //     .then(res=>res.json())
-          //     .then(data=>setBillInfo(data))
-          // },[billInfo])
-
+           
+// create bill button 
+const handleCreateBill=()=>{
+  console.log(user?.name)
+  if(user.name){
+    setShow(true)
+  }else{
+    navigate('/login')
+  }
+}
 
 //  bill edit
 const editBill=(id)=>{
   axios.get(`https://nameless-wave-74906.herokuapp.com/api/single-billing/${id}`)
-  .then(data=>setSingleBill(data.data))
+  .then(data=>setSingleBill(data?.data))
   setShow(true)
   setIsUpdate(true)
 }
@@ -76,7 +78,7 @@ console.log(category,searchText)
         </div>
   </InputGroup>
             
-            <Button className='me-2' variant="primary" size="lg" onClick={()=>setShow(true)}>Add New Bill</Button>
+            <Button className='me-2' variant="primary" size="lg" onClick={()=>handleCreateBill()}>Add New Bill</Button>
           </div>
         <Table striped bordered hover responsive>
         <thead>

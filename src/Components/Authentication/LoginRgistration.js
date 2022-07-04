@@ -1,8 +1,13 @@
 import React,{useState} from 'react';
 import {Form,Button} from 'react-bootstrap'
 import axios from 'axios'
+import { useFunctionality } from './../../Custom-Hook/useFunctionality';
+import { useNavigate } from 'react-router-dom';
 
 const LoginRegistration = () => {
+  const navigate=useNavigate()
+  const{user,setUser}=useFunctionality()
+  console.log(user?.name,user)
   const[checkedVal,setCheckedVal]=useState(false)
   const [userInfo,setUserInfo]=useState({
     name:'',email:'',password:''
@@ -20,14 +25,22 @@ const handleSubmit=(e)=>{
 console.log(userInfo)
   if(checkedVal){
 axios.post(`https://nameless-wave-74906.herokuapp.com/api/registration`,userInfo)
-.then(result=>{
+.then(res=>{
+setUser(JSON.parse(res.config.data))
+setCheckedVal(false)
 alert('created successfully')
+
 })
   }else{
     axios.post("https://nameless-wave-74906.herokuapp.com/api/login", userInfo)
-  .then((res) => {
-    if (res.data.insertedId) {
-      alert("login successfully");
+  .then(res => {
+    console.log(res)
+    if (res.status==200) {
+      setUser(res.data.user)
+      alert(res.data?.message);
+      navigate('/')
+    }else{
+alert('login failed')
     }
   });
   }

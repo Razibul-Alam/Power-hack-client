@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const AddEditBilling=({show,setShow,handleClose,isUpdate,singleInfo,setIsUpdate})=>{
 
-  const{name,email,phone,ammount,_id}=singleInfo;
+  // const{name,email,phone,ammount,_id}=singleInfo;
   const [defaultval,setDefaultVal]=useState({
     name:'',email:'',phone:null,ammount:null
   })
@@ -18,13 +18,13 @@ console.log(isUpdate,defaultval)
       // update billing
       useEffect(()=>{
         if(singleInfo && isUpdate==true){
-            setBillingInfo({name:name,email:email,phone:phone,ammount:ammount,_id:_id})
+            setBillingInfo({name:singleInfo?.name,email:singleInfo?.email,phone:singleInfo?.phone,ammount:singleInfo?.ammount,_id:singleInfo?._id})
         }
         },[isUpdate,singleInfo])
       // update billing
       useEffect(()=>{
         if(isUpdate==true){
-            setDefaultVal({name:name,email:email,phone:phone,ammount:ammount})
+            setDefaultVal({name:singleInfo?.name,email:singleInfo?.email,phone:singleInfo?.phone,ammount:singleInfo?.ammount})
         }else{
           setDefaultVal({name:'',email:'',phone:null,ammount:null})
         }
@@ -33,7 +33,7 @@ console.log(isUpdate,defaultval)
     const handleSubmit=(e)=>{
         e.preventDefault()
         if(isUpdate){
-axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,billingInfo)
+axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${singleInfo?._id}`,billingInfo)
 .then(result=>{
   setShow(false)
   setIsUpdate(false)
@@ -72,7 +72,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     className="form-control"
                     type="text"
                     name="name"
-                    defaultValue={defaultval.name}
+                    defaultValue={defaultval?.name}
                   />
                   <label className="form-label">Email</label>
                   <input
@@ -81,12 +81,12 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                     className="form-control"
                     type="email"
                     name="email"
-                    defaultValue={defaultval.email}
+                    defaultValue={defaultval?.email}
                   />
                   <label className="form-label">Phone</label>
                   <input
                     required
-                    defaultValue={defaultval.phone}
+                    defaultValue={defaultval?.phone}
                     onChange={handleChange}
                     className="form-control"
                     type="number"
@@ -94,7 +94,7 @@ axios.put(`https://nameless-wave-74906.herokuapp.com/api/update-billing/${_id}`,
                   />
                   <label className="form-label">Paid Ammount</label>
                   <input
-                  defaultValue={defaultval.ammount}
+                  defaultValue={defaultval?.ammount}
                     required
                     onChange={handleChange}
                     className="form-control"
