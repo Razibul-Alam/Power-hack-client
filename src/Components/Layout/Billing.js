@@ -30,12 +30,7 @@ useEffect(()=>{
            
 // create bill button 
 const handleCreateBill=()=>{
-  console.log(user?.name)
-  if(user.name){
     setShow(true)
-  }else{
-    navigate('/login')
-  }
 }
 
 //  bill edit
