@@ -3,7 +3,7 @@ import axios from 'axios';
 export const useAllAction=()=>{
     const [billInfo,setBillInfo]=useState([])
     const [dataCount,setDataCount]=useState(null)
-    const [totalPayment,setTotalpayment]=useState(0)
+    const [totalPayment,setTotalPayment]=useState(0)
     const [user,setUser]=useState({})
     const loadBills=(pageNumber,category,searchText)=>{
         console.log(searchText)
@@ -28,8 +28,13 @@ export const useAllAction=()=>{
        }
     // total Amount
 useEffect(()=>{
-    const total=billInfo?.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
-    setTotalpayment(total)
+    axios.get(`https://nameless-wave-74906.herokuapp.com/api/billing-list`,{headers:{jtoken:`Bearer ${user?.accesToken}`}})
+    .then(data=>{
+        const total=data.data?.AllBills.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
+        setTotalPayment(total)
+    })
   },[billInfo])
+
+//   return actions
     return{loadBills,billInfo,setBillInfo,removeBill,totalPayment,dataCount,user,setUser}
 }

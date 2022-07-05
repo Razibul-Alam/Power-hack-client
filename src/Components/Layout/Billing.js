@@ -9,7 +9,7 @@ import { useFunctionality } from './../../Custom-Hook/useFunctionality';
 import { useNavigate } from 'react-router-dom';
 const Billing = () => {
   const navigate=useNavigate()
-  const {loadBills,billInfo,setBillInfo,removeBill,dataCount,user}=useFunctionality()
+  const {loadBills,billInfo,removeBill,dataCount,user}=useFunctionality()
   const [singleBill,setSingleBill]=useState({});
   const [pageNumber,setPageNumber]=useState(0);
   const [show, setShow] = useState(false);  
@@ -23,6 +23,12 @@ const Billing = () => {
               }
               setShow(false)
             }
+// sorted items
+const sortedItems=billInfo?.sort((a,b)=>{
+  return b.ammount-a.ammount
+          })
+          console.log(sortedItems)
+
 // load data
 useEffect(()=>{
   loadBills(pageNumber,category,searchText)
