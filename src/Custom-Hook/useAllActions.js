@@ -19,7 +19,9 @@ export const useAllAction=()=>{
         const confirmDelete=window.confirm('Are you sure? Do you want to remove?')
         if(confirmDelete){
          axios.delete(`https://nameless-wave-74906.herokuapp.com/api/delete-billing/${_id}`)
-         .then((result) =>{if(result.data.deletedCount>0){
+         .then(result =>{
+            console.log(result)
+            if(result.data.deletedCount>0){
       const remainingItems=billInfo?.filter(bill=>!bill._id==_id)
       // handleShow()
       setBillInfo(remainingItems)
@@ -28,7 +30,7 @@ export const useAllAction=()=>{
        }
     // total Amount
 useEffect(()=>{
-    axios.get(`https://nameless-wave-74906.herokuapp.com/api/billing-list`,{headers:{jtoken:`Bearer ${user?.accesToken}`}})
+    axios.get(`https://nameless-wave-74906.herokuapp.com/api/billing-list`)
     .then(data=>{
         const total=data.data?.AllBills.reduce((sum,bill)=>sum+parseInt(bill.ammount),0)
         setTotalPayment(total)

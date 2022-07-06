@@ -26,7 +26,6 @@ console.log(userInfo)
   if(checkedVal){
 axios.post(`https://nameless-wave-74906.herokuapp.com/api/registration`,userInfo)
 .then(res=>{
-setUser(JSON.parse(res.config.data))
 setCheckedVal(false)
 alert('created successfully')
 

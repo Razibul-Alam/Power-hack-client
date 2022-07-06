@@ -18,7 +18,7 @@ console.log(isUpdate,defaultval)
       // update billing
       useEffect(()=>{
         if(singleInfo && isUpdate==true){
-            setBillingInfo({name:singleInfo?.name,email:singleInfo?.email,phone:singleInfo?.phone,ammount:singleInfo?.ammount,_id:singleInfo?._id})
+            setBillingInfo({name:singleInfo?.name,email:singleInfo?.email,phone:singleInfo?.phone,ammount:singleInfo?.ammount})
         }
         },[isUpdate,singleInfo])
       // update billing
